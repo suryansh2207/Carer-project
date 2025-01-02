@@ -1,0 +1,6 @@
+@echo off
+echo Starting Milvus services...
+docker-compose up -d
+echo Waiting for services to start...
+timeout 5s
+echo Services should be ready now

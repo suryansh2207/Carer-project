@@ -1,0 +1,9 @@
+beautifulsoup4
+requests
+pymysql
+transformers
+sentence-transformers
+pymilvus
+mysql-connector-python
+keybert
+torch
