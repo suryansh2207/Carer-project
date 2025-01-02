@@ -14,7 +14,7 @@ This project is designed to crawl, process, and query oncology-related articles 
 1. Clone the repository:
     ```bash
     git clone https://github.com/suryansh2207/Carer-project.git
-    cd carer-project
+    cd Carer-project
     ```
     
 ## Usage
