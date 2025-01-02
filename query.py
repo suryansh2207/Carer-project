@@ -68,10 +68,18 @@ def search_articles(query_text: str) -> List[Dict]: #This function helps us to s
         )
         results = cursor.fetchall()
         cursor.close()
-        return results
+        logger.info(f"Search results for '{query_text}':")
+        for result in results:
+            logger.info(result)
     except Exception as e:
         logger.error(f"Error searching articles: {str(e)}")
         return []
     finally:
         db_conn.close()
 
+
+if __name__ == "__main__":
+    query_text = "Give me the journal those are published last week"
+    articles = search_articles(query_text)
+    for article in articles:
+        print(article)

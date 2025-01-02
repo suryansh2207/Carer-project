@@ -49,7 +49,13 @@ echo "Setting up vector store..."
 python -c "from vector_store import init_vector_store, process_articles; init_vector_store(); process_articles()"
 
 echo "Starting query interface..."
-python -c "from query import search_articles; print('Query interface ready.')"
+
+echo "Query Interface Ready!"
+python -c "from query import search_articles; search_articles(query_text='Give me the journal those are published last week')"
+
+# Vector search step
+echo "Running vector search test..."
+python -c "from vector_store import search_vectors; search_vectors(query_title='Journal titles on oncology published recently')"
 
 # # Deactivate virtual environment
 # deactivate

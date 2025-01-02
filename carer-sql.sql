@@ -18,4 +18,3 @@ CREATE INDEX idx_pub_date ON articles(pub_date);
 CREATE INDEX idx_title ON articles(title);
 
 select * from articles;
-

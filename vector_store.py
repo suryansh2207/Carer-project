@@ -7,8 +7,16 @@ from crawler import connect_db, load_config
 
 logger = logging.getLogger(__name__)
 
+def connect_to_milvus():
+    try:
+        connections.connect(alias="default", host="localhost", port="19530")
+        print("Connected to Milvus successfully.")
+    except Exception as e:
+        print(f"Failed to connect to Milvus: {e}")
+
 def init_vector_store(): #This function helps us to initialize the vector store
     """Initialize Milvus connection and create collection"""
+    connect_to_milvus()
     config = load_config()
     try:
         connections.connect(
@@ -34,6 +42,7 @@ def init_vector_store(): #This function helps us to initialize the vector store
 def store_vectors(titles: List[str], ids: List[int]): #This function helps us to store the vectors in Milvus
     """Store title vectors in Milvus"""
     config = load_config()
+    connect_to_milvus()
     try:
         # Input validation
         if not titles or not ids:
@@ -70,25 +79,6 @@ def store_vectors(titles: List[str], ids: List[int]): #This function helps us to
     except Exception as e:
         logger.error(f"Error storing vectors: {str(e)}")
         raise
-
-
-def verify_stored_vectors(collection: Collection, ids: List[int]): #This function helps us to verify the stored vectors
-    """Verify that vectors are stored correctly in Milvus"""
-    try:
-        # Load the collection into memory
-        collection = Collection("article_vectors")
-        collection.load()
-        
-        for id_val in ids:
-            # Use '==' for equality check
-            expr = f"id == {id_val}"  
-            results = collection.query(expr=expr)
-            if not results:
-                logger.warning(f"No vector found for ID: {id_val}")
-            else:
-                logger.info(f"Vector found for ID: {id_val}")
-    except Exception as e:
-        logger.error(f"Error verifying stored vectors: {str(e)}")
 
 
 def process_articles(): #This function helps us to process the articles
@@ -129,7 +119,9 @@ def process_articles(): #This function helps us to process the articles
 
 def search_vectors(query_title: str): #This function helps us to search for similar vectors based on a query title
     """Search for similar vectors based on a query title"""
+    connect_to_milvus()
     config = load_config()
+
     try:
         model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
         query_vector = model.encode([query_title]).tolist()
@@ -147,4 +139,3 @@ def search_vectors(query_title: str): #This function helps us to search for simi
             logger.info(result)
     except Exception as e:
         logger.error(f"Error searching vectors: {str(e)}")
-

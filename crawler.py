@@ -67,7 +67,7 @@ def extract_article_data(url: str) -> Optional[Dict[str, str]]: #This function h
             'abstract': abstract_text,
         }
 
-        logger.info(f"Extracted data: {article_data}")
+        # logger.info(f"Extracted data: {article_data}")
         return article_data
 
     except Exception as e:
