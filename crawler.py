@@ -10,13 +10,13 @@ from urllib.parse import urljoin
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def load_config() -> configparser.ConfigParser:
+def load_config() -> configparser.ConfigParser: #This function helps us to load the configuration file
     """Load configuration from config.in file"""
     config = configparser.ConfigParser()
     config.read('config.in')
     return config
 
-def connect_db():
+def connect_db(): #This function helps us to connect to the database
     """Establish MySQL database connection"""
     return mysql.connector.connect(
         host='localhost',
@@ -25,7 +25,7 @@ def connect_db():
         database='articles_db'
     )
 
-def extract_article_data(url: str) -> Optional[Dict[str, str]]:
+def extract_article_data(url: str) -> Optional[Dict[str, str]]: #This function helps us to extract the article data from the URL we provide
     """Extract article details from given URL"""
     try:
         response = requests.get(url, timeout=10)
@@ -74,7 +74,7 @@ def extract_article_data(url: str) -> Optional[Dict[str, str]]:
         logger.error(f"Error processing {url}: {e}")
         return None
 
-def store_article(db_conn, article_data: Dict[str, str]) -> Optional[int]:
+def store_article(db_conn, article_data: Dict[str, str]) -> Optional[int]: #This function helps us to store the article data in the MySQL database
     """Store article data in MySQL database"""
     cursor = db_conn.cursor()
     try:
@@ -98,7 +98,7 @@ def store_article(db_conn, article_data: Dict[str, str]) -> Optional[int]:
     finally:
         cursor.close()
 
-def fetch_articles():
+def fetch_articles(): #This function helps us to fetch the articles from the URL we provide
     """Main function to crawl and store articles"""
     config = load_config()
     base_url = config['crawler']['base_url']
@@ -132,5 +132,3 @@ def fetch_articles():
         if 'db_conn' in locals():
             db_conn.close()
 
-if __name__ == "__main__":
-    fetch_articles()

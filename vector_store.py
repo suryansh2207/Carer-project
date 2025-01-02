@@ -7,7 +7,7 @@ from crawler import connect_db, load_config
 
 logger = logging.getLogger(__name__)
 
-def init_vector_store():
+def init_vector_store(): #This function helps us to initialize the vector store
     """Initialize Milvus connection and create collection"""
     config = load_config()
     try:
@@ -31,7 +31,7 @@ def init_vector_store():
         logger.error(f"Error initializing vector store: {str(e)}")
         raise
 
-def store_vectors(titles: List[str], ids: List[int]):
+def store_vectors(titles: List[str], ids: List[int]): #This function helps us to store the vectors in Milvus
     """Store title vectors in Milvus"""
     config = load_config()
     try:
@@ -72,7 +72,7 @@ def store_vectors(titles: List[str], ids: List[int]):
         raise
 
 
-def verify_stored_vectors(collection: Collection, ids: List[int]):
+def verify_stored_vectors(collection: Collection, ids: List[int]): #This function helps us to verify the stored vectors
     """Verify that vectors are stored correctly in Milvus"""
     try:
         # Load the collection into memory
@@ -91,7 +91,7 @@ def verify_stored_vectors(collection: Collection, ids: List[int]):
         logger.error(f"Error verifying stored vectors: {str(e)}")
 
 
-def process_articles():
+def process_articles(): #This function helps us to process the articles
     """Process and store vectors for all articles"""
     db_conn = connect_db()
     try:
@@ -127,7 +127,7 @@ def process_articles():
         cursor.close()
         db_conn.close()
 
-def search_vectors(query_title: str):
+def search_vectors(query_title: str): #This function helps us to search for similar vectors based on a query title
     """Search for similar vectors based on a query title"""
     config = load_config()
     try:
@@ -148,10 +148,3 @@ def search_vectors(query_title: str):
     except Exception as e:
         logger.error(f"Error searching vectors: {str(e)}")
 
-
-def main():
-    init_vector_store()  # Initialize Milvus and create collection
-    process_articles()  # Process and store vectors # Name of the collection
-    ids_to_verify = [7,8,9]
-    verify_stored_vectors("article_vectors",ids_to_verify)  # Verify the stored vectors
-    search_vectors("Immunosuppressive dura-derived macrophages in leptomeningeal metastasis") # Search for similar vectors

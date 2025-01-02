@@ -8,7 +8,7 @@ from crawler import connect_db
 
 logger = logging.getLogger(__name__)
 
-def init_models():
+def init_models(): #This function helps us to initialize the summarization and keyword extraction models
     """Initialize the summarization and keyword extraction models"""
     device = "cuda" if torch.cuda.is_available() else "cpu"
     summarizer = pipeline("summarization", 
@@ -17,7 +17,7 @@ def init_models():
     keyword_model = KeyBERT()
     return summarizer, keyword_model
 
-def process_article(text: str, summarizer, keyword_model) -> Tuple[str, List[str]]:
+def process_article(text: str, summarizer, keyword_model) -> Tuple[str, List[str]]: #This function helps us to process the article
     """Generate summary and keywords for an article"""
     try:
         summary = summarizer(text, max_length=130, min_length=30)[0]['summary_text']
@@ -27,7 +27,7 @@ def process_article(text: str, summarizer, keyword_model) -> Tuple[str, List[str
         logger.error(f"Error processing article: {str(e)}")
         return "", []
 
-def update_article_analysis(db_conn, article_id: int, summary: str, keywords: List[str]):
+def update_article_analysis(db_conn, article_id: int, summary: str, keywords: List[str]): #This function helps us to update the article with summary and keywords
     """Update article with summary and keywords"""
     cursor = db_conn.cursor()
     try:
@@ -44,7 +44,7 @@ def update_article_analysis(db_conn, article_id: int, summary: str, keywords: Li
     finally:
         cursor.close()
 
-def process_all_articles():
+def process_all_articles(): #This function helps us to process all unprocessed articles
     """Process all unprocessed articles"""
     db_conn = connect_db()
     summarizer, keyword_model = init_models()

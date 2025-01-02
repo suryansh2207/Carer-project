@@ -9,7 +9,7 @@ import configparser
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def load_config() -> dict:
+def load_config() -> dict: 
     """Load configuration from config.in file"""
     config = configparser.ConfigParser()
     config.read('config.in')
@@ -24,7 +24,7 @@ def connect_db():
         database='articles_db'
     )
 
-def search_articles(query_text: str) -> List[Dict]:
+def search_articles(query_text: str) -> List[Dict]: #This function helps us to search articles based on the query text
     """Search articles based on query text"""
     config = load_config()
     db_conn = connect_db()
@@ -75,9 +75,3 @@ def search_articles(query_text: str) -> List[Dict]:
     finally:
         db_conn.close()
 
-
-if __name__ == "__main__":
-    query_text = "Give me the journal those are published last week"
-    articles = search_articles(query_text)
-    for article in articles:
-        print(article)
