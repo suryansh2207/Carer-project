@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# run.sh - Script to run all components of the article crawler and search system
+# run_all.sh - Script to run all components of the article crawler and search system
 
 # Check Python version
 python_version=$(python -c 'import sys; print(sys.version_info[0:2])')
@@ -9,23 +9,23 @@ if [[ $python_version != "(3, 12)" ]]; then
     exit 1
 fi
 
-# # Check if virtual environment exists, if not create it
-# if [ ! -d "venv" ]; then
-#     echo "Creating virtual environment..."
-#     python -m venv venv
-# fi
+# Check if virtual environment exists, if not create it
+if [ ! -d "venv" ]; then
+    echo "Creating virtual environment..."
+    python -m venv venv
+fi
 
-# # Activate virtual environment
-# # source venv/bin/activate  # For Unix/Linux
-# # Or use: 
-#  .\venv\Scripts\activate  # For Windows
+# Activate virtual environment
+# source venv/bin/activate  # For Unix/Linux
+# Or use: 
+source ./venv/Scripts/activate # For Windows
 
 # Install required packages
-# echo "Installing required packages..."
-# pip install --upgrade pip
-# pip install requests beautifulsoup4 mysql-connector-python \
-#     transformers torch sentence-transformers keybert pymilvus \
-#     configparser numpy typing_extensions
+echo "Installing required packages..."
+pip install --upgrade pip
+pip install requests beautifulsoup4 mysql-connector-python \
+    transformers torch sentence-transformers keybert pymilvus \
+    configparser numpy typing_extensions
 
 # Run database setup
 echo "Setting up database..."
@@ -57,7 +57,7 @@ python -c "from query import search_articles; search_articles(query_text='Give m
 echo "Running vector search test..."
 python -c "from vector_store import search_vectors; search_vectors(query_title='Journal titles on oncology published recently')"
 
-# # Deactivate virtual environment
-# deactivate
+# Deactivate virtual environment
+deactivate
 
 echo "All components have been executed successfully!"

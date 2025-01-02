@@ -1,17 +1,19 @@
+# This configuration file contains settings for the Carer Project.
+# Change the host, user, password, database, and Milvus host to your own details.
+
 [database]
-host = localhost
-user = root
-password = 22072003
-database = articles_db
+host = your_hostid
+user = your_username
+password = your_password
+database = your_database
 
 [milvus]
-host = localhost
+host = your_hostid
 port = 19530
-collection_name = article_vectors
+collection_name = your_collection_name
 
 [crawler]
 base_url = https://www.nature.com/subjects/oncology
-max_pages = 10
 
 [model]
 embedding_model = sentence-transformers/all-MiniLM-L6-v2

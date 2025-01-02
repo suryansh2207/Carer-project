@@ -19,10 +19,10 @@ def load_config() -> configparser.ConfigParser: #This function helps us to load 
 def connect_db(): #This function helps us to connect to the database
     """Establish MySQL database connection"""
     return mysql.connector.connect(
-        host='localhost',
-        user='root',
-        password='22072003',
-        database='articles_db'
+        host = "your_hostid",    #Change the host, user, password and database to your own MySQL database details
+        user = "your_username",
+        password = "your_password",
+        database = "your_database"
     )
 
 def extract_article_data(url: str) -> Optional[Dict[str, str]]: #This function helps us to extract the article data from the URL we provide
@@ -132,3 +132,5 @@ def fetch_articles(): #This function helps us to fetch the articles from the URL
         if 'db_conn' in locals():
             db_conn.close()
 
+if __name__ == "__main__":
+    fetch_articles()
