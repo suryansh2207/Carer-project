@@ -19,7 +19,7 @@ This project is designed to crawl, process, and query oncology-related articles 
     
 ## Usage
 
-To run the entire pipeline, execute the [run_all.sh](http://_vscodecontentref_/1) script:
+To run the entire pipeline, execute the run_all.sh script:
 ```bash
 ./run_all.sh
 ```
