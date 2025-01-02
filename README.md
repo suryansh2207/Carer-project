@@ -45,7 +45,7 @@ Query
 Vector Store
 - The vector_store.py script initializes the vector store and processes articles for vector-based search.
 
-##Configuration
+## Configuration
 
 The config.in file contains configuration settings for the project, including database connection details and Milvus settings.
 
